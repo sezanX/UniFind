@@ -1,0 +1,17 @@
+# Enable URL rewriting
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /UniFind/
+    
+    # Handle 404 errors
+    ErrorDocument 404 /UniFind/404.php
+    
+    # Prevent directory listing
+    Options -Indexes
+    
+    # Protect sensitive files
+    <FilesMatch "\.(htaccess|htpasswd|ini|log|sh|inc|bak|sql)$">
+        Order Allow,Deny
+        Deny from all
+    </FilesMatch>
+</IfModule>

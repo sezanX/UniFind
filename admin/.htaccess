@@ -1,0 +1,16 @@
+# Secure admin directory
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /UniFind/admin/
+    
+    # Redirect to login if not authenticated
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ index.php [L]
+</IfModule>
+
+# Deny access to .htaccess
+<Files .htaccess>
+    Order allow,deny
+    Deny from all
+</Files>
