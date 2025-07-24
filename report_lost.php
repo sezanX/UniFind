@@ -15,7 +15,6 @@ $potentialMatches = [];
 
 // Get categories for dropdown
 $categories = getCategories();
-
 // Get current user
 $user = getCurrentUser();
 
@@ -28,10 +27,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         // Handle image upload
         $imageUploadResult = ['status' => true, 'filename' => null];
-        
         if (!empty($_FILES['image']['name'])) {
             $imageUploadResult = uploadImage($_FILES['image'], 'lost');
-            
             if (!$imageUploadResult['status']) {
                 $error = $imageUploadResult['message'];
             }
@@ -40,11 +37,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // If no errors, insert into database
         if (empty($error)) {
             global $conn;
-            
             $stmt = $conn->prepare("INSERT INTO lost_items (user_id, title, category_id, date_lost, location, description, image, phone, whatsapp, email, status, date_reported) 
                                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'active', NOW())");
             
-            $stmt->bind_param("iissssssss", 
+            // CORRECTED LINE:
+            $stmt->bind_param("isisssssss", 
                 $_SESSION['user_id'],
                 $_POST['title'],
                 $_POST['category_id'],
@@ -56,10 +53,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_POST['whatsapp'],
                 $_POST['email']
             );
-            
+
             if ($stmt->execute()) {
                 $lostItemId = $conn->insert_id;
-                
                 // Check for potential matches
                 $lostItem = [
                     'category_id' => $_POST['category_id'],

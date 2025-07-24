@@ -563,8 +563,8 @@ function searchItems($filters) {
     }
     
     if (!empty($filters['department'])) {
-        $lostQuery .= " AND l.department_id = ?";
-        $foundQuery .= " AND f.department_id = ?";
+        $lostQuery .= " AND u.department = ?";
+        $foundQuery .= " AND u.department = ?";
         $params[] = $filters['department'];
         $types .= "i";
     }
@@ -627,6 +627,11 @@ function searchItems($filters) {
     usort($items, function($a, $b) {
         return strtotime($b['date_reported']) - strtotime($a['date_reported']);
     });
+    
+    // Apply limit if specified
+    if (!empty($filters['limit']) && is_numeric($filters['limit'])) {
+        $items = array_slice($items, 0, $filters['limit']);
+    }
     
     return $items;
 }

@@ -159,7 +159,7 @@ include 'includes/header.php';
                                 </li>
                                 <li class="mb-2">
                                     <strong><i class="fas fa-calendar-plus me-2"></i>Reported:</strong> 
-                                    <?php echo formatDate($item['created_at']); ?>
+                                    <?php echo formatDate($item['date_reported']); ?>
                                 </li>
                             </ul>
                         </div>

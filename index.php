@@ -11,8 +11,8 @@ $recent_activity = getRecentActivity(5);
 // Get statistics for dashboard
 $statistics = getStatistics();
 
-// Get recent activity
-$recent_activity = getRecentActivity(5);
+// Get recent items
+$recentItems = searchItems(['type' => 'all', 'limit' => 6]);
 ?>
 
 <!-- Hero Section -->
