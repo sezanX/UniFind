@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniFind Project Documentation - Deep Dive</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* slate-50 */
+        }
+        .nav-link.active {
+            color: #4f46e5; /* indigo-600 */
+            border-bottom-color: #4f46e5;
+        }
+        .page-section {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        pre {
+            background-color: #1e293b; /* slate-800 */
+            color: #e2e8f0; /* slate-200 */
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            font-size: 0.875rem;
+            font-family: 'Source Code Pro', monospace;
+        }
+        code.inline-code {
+            font-family: 'Source Code Pro', monospace;
+            background-color: #e2e8f0; /* slate-200 */
+            color: #1e293b; /* slate-800 */
+            padding: 0.125rem 0.375rem;
+            border-radius: 0.25rem;
+            font-size: 0.85em;
+        }
+        .prose h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        .prose h4 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .prose p {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+        .prose ul {
+            list-style-type: disc;
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .prose li {
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body class="text-slate-800">
+
+    <!-- Header and Navigation -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-indigo-600">UniFind</h1>
+            <nav class="hidden md:flex space-x-8">
+                <a href="#overview" class="nav-link text-slate-600 hover:text-indigo-600 font-medium border-b-2 border-transparent transition">Overview</a>
+                <a href="#architecture" class="nav-link text-slate-600 hover:text-indigo-600 font-medium border-b-2 border-transparent transition">System Architecture</a>
+                <a href="#deep-dive" class="nav-link text-slate-600 hover:text-indigo-600 font-medium border-b-2 border-transparent transition">Deep Dive</a>
+            </nav>
+            <button id="mobile-menu-button" class="md:hidden focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
+             <a href="#overview" class="nav-link block py-2 text-slate-600 hover:text-indigo-600">Overview</a>
+             <a href="#architecture" class="nav-link block py-2 text-slate-600 hover:text-indigo-600">System Architecture</a>
+             <a href="#deep-dive" class="nav-link block py-2 text-slate-600 hover:text-indigo-600">Deep Dive</a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto p-6 md:p-8">
+
+        <!-- Page 1: Project Overview -->
+        <section id="overview" class="page-section">
+            <div class="bg-white p-8 rounded-xl shadow-lg prose max-w-none">
+                <h2 class="text-3xl font-bold mb-2 text-slate-900">Project Overview</h2>
+                
+                <h3>Problem Statement</h3>
+                <p>On a large university campus, the process of recovering lost personal items is often stressful, inefficient, and reliant on luck. There is typically no centralized system for reporting lost items or handing in found ones. This leads to a high volume of unclaimed property and creates a sense of inconvenience and insecurity among the campus community.</p>
+
+                <h3>Project Objective</h3>
+                <p>UniFind aims to solve this problem by providing a centralized, efficient, and user-friendly Lost and Found Management System for the Northern University of Business and Technology Khulna. The goal is to create a single online platform that simplifies the process of reuniting lost items with their rightful owners, fostering a more secure and supportive campus environment.</p>
+                
+                <h3>Key Features</h3>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h4>For General Users:</h4>
+                        <ul>
+                            <li><strong>Secure Accounts:</strong> Users can register, log in, and manage their profiles.</li>
+                            <li><strong>Item Reporting:</strong> Submit detailed reports for both lost and found items, including descriptions, locations, dates, and images.</li>
+                            <li><strong>Advanced Search:</strong> A powerful search engine to filter items by category, department, date, and keywords.</li>
+                            <li><strong>Automatic Matching:</strong> The system intelligently suggests potential matches for newly reported items.</li>
+                            <li><strong>Report Management:</strong> Users can view and manage the status of their reported items.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>For Administrators:</h4>
+                        <ul>
+                            <li><strong>Central Dashboard:</strong> An overview of system statistics (total users, items, matches).</li>
+                            <li><strong>Full CRUD Control:</strong> Admins can Create, Read, Update, and Delete users, items, categories, and departments.</li>
+                            <li><strong>Match Verification:</strong> Admins can review, confirm, or reject potential matches flagged by users.</li>
+                            <li><strong>User Management:</strong> Ability to edit user details and grant or revoke admin privileges.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>Technology Stack</h3>
+                <p>The project is a classic web application built on a LAMP-like stack.</p>
+                <ul>
+                    <li><strong>Backend:</strong> PHP is used for all server-side logic, including database interaction, user authentication, and business logic.</li>
+                    <li><strong>Database:</strong> MySQL stores all persistent data, such as user profiles, item reports, and system settings. The schema is defined in <code class="inline-code">unifind_db.sql</code>.</li>
+                    <li><strong>Frontend:</strong> The user interface is built with standard HTML, styled with CSS (including the Bootstrap framework for responsiveness), and made interactive with JavaScript and jQuery.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Page 2: System Architecture -->
+        <section id="architecture" class="page-section">
+             <div class="bg-white p-8 rounded-xl shadow-lg prose max-w-none">
+                <h2 class="text-3xl font-bold mb-6 text-slate-900">System Architecture & Design</h2>
+
+                <h3>Directory & File Structure</h3>
+                <p>The project is organized into a modular structure that separates concerns, making it easier to maintain and understand.</p>
+                <ul>
+                    <li><code class="inline-code">/</code> (Root): Contains user-facing pages like <code class="inline-code">index.php</code>, <code class="inline-code">login.php</code>, and <code class="inline-code">search.php</code>.</li>
+                    <li><code class="inline-code">/includes/</code>: The core of the application's backend logic.
+                        <ul>
+                            <li><code class="inline-code">db.php</code>: Handles the MySQL database connection.</li>
+                            <li><code class="inline-code">auth.php</code>: Manages user authentication (registration, login, sessions, access control).</li>
+                            <li><code class="inline-code">functions.php</code>: A library of reusable functions for tasks like image uploads, searching, and matching.</li>
+                        </ul>
+                    </li>
+                    <li><code class="inline-code">/admin/</code>: A protected directory containing the entire administrative panel for site management.</li>
+                    <li><code class="inline-code">/assets/</code>: Stores static files like CSS stylesheets and JavaScript files.</li>
+                    <li><code class="inline-code">/uploads/</code>: The destination directory for all user-uploaded images of items.</li>
+                </ul>
+
+                <h3>Database Schema</h3>
+                <p>The database is the backbone of the system, designed to store all information in a structured way. The key tables are:</p>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead class="bg-slate-100">
+                            <tr>
+                                <th class="p-2 border">Table Name</th>
+                                <th class="p-2 border">Purpose</th>
+                                <th class="p-2 border">Key Columns</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="p-2 border"><code class="inline-code">users</code></td>
+                                <td class="p-2 border">Stores user account information.</td>
+                                <td class="p-2 border"><code class="inline-code">id</code>, <code class="inline-code">username</code>, <code class="inline-code">password</code> (hashed), <code class="inline-code">email</code>, <code class="inline-code">role</code> ('user' or 'admin')</td>
+                            </tr>
+                            <tr>
+                                <td class="p-2 border"><code class="inline-code">lost_items</code></td>
+                                <td class="p-2 border">Contains details of all reported lost items.</td>
+                                <td class="p-2 border"><code class="inline-code">id</code>, <code class="inline-code">user_id</code>, <code class="inline-code">category_id</code>, <code class="inline-code">title</code>, <code class="inline-code">description</code>, <code class="inline-code">location</code>, <code class="inline-code">lost_date</code>, <code class="inline-code">status</code></td>
+                            </tr>
+                            <tr>
+                                <td class="p-2 border"><code class="inline-code">found_items</code></td>
+                                <td class="p-2 border">Contains details of all reported found items.</td>
+                                <td class="p-2 border"><code class="inline-code">id</code>, <code class="inline-code">user_id</code>, <code class="inline-code">category_id</code>, <code class="inline-code">title</code>, <code class="inline-code">description</code>, <code class="inline-code">location</code>, <code class="inline-code">found_date</code>, <code class="inline-code">status</code></td>
+                            </tr>
+                             <tr>
+                                <td class="p-2 border"><code class="inline-code">matches</code></td>
+                                <td class="p-2 border">Links a lost item to a found item when a claim is made.</td>
+                                <td class="p-2 border"><code class="inline-code">id</code>, <code class="inline-code">lost_item_id</code>, <code class="inline-code">found_item_id</code>, <code class="inline-code">claimer_id</code>, <code class="inline-code">status</code> ('pending', 'confirmed', 'rejected')</td>
+                            </tr>
+                            <tr>
+                                <td class="p-2 border"><code class="inline-code">categories</code></td>
+                                <td class="p-2 border">A lookup table for item categories (e.g., 'Electronics', 'ID Card').</td>
+                                <td class="p-2 border"><code class="inline-code">id</code>, <code class="inline-code">name</code></td>
+                            </tr>
+                            <tr>
+                                <td class="p-2 border"><code class="inline-code">departments</code></td>
+                                <td class="p-2 border">A lookup table for university departments.</td>
+                                <td class="p-2 border"><code class="inline-code">id</code>, <code class="inline-code">name</code></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Page 3: Deep Dive -->
+        <section id="deep-dive" class="page-section">
+            <div class="bg-white p-8 rounded-xl shadow-lg prose max-w-none">
+                <h2 class="text-3xl font-bold mb-6 text-slate-900">Deep Dive: Core Logic & Security</h2>
+                
+                <h3>User Authentication Flow</h3>
+                <p>Authentication is handled by <code class="inline-code">includes/auth.php</code> and is crucial for securing the system.</p>
+                <ol>
+                    <li><strong>Registration:</strong> A new user signs up via <code class="inline-code">signup.php</code>. The <code class="inline-code">registerUser()</code> function in <code class="inline-code">auth.php</code> is called. It first checks if the username or email already exists. Crucially, it hashes the password using PHP's native <code class="inline-code">password_hash()</code> function before inserting the new user into the database. This ensures plain-text passwords are never stored.</li>
+                    <li><strong>Login:</strong> A user logs in via <code class="inline-code">login.php</code>. The <code class="inline-code">loginUser()</code> function retrieves the user record by username. It then uses <code class="inline-code">password_verify()</code> to compare the submitted password against the stored hash. This is a secure way to check passwords without ever decrypting the stored hash.</li>
+                    <li><strong>Session Management:</strong> Upon successful login, a PHP session is started (<code class="inline-code">session_start()</code>). Key information like <code class="inline-code">user_id</code>, <code class="inline-code">username</code>, and <code class="inline-code">role</code> is stored in the <code class="inline-code">$_SESSION</code> superglobal.</li>
+                    <li><strong>Access Control:</strong> On protected pages (e.g., <code class="inline-code">profile.php</code> or any admin page), the script first checks <code class="inline-code">isLoggedIn()</code>. For the admin panel, it also checks <code class="inline-code">isAdmin()</code>. These functions simply check the values in the <code class="inline-code">$_SESSION</code> variable to grant or deny access, redirecting unauthorized users to the login page.</li>
+                </ol>
+
+                <h3>The Automatic Matching Algorithm</h3>
+                <p>This is one of the project's core "intelligent" features, handled by <code class="inline-code">findPotentialMatches()</code> in <code class="inline-code">functions.php</code>. When a user reports a <strong>lost</strong> item, the system automatically searches for potential matches in the <strong>found</strong> items table based on three criteria:</p>
+                <ul>
+                    <li><strong>Same Category:</strong> It only looks for items in the same category (e.g., if a 'Phone' is lost, it only searches for found 'Phones').</li>
+                    <li><strong>Similar Location:</strong> It performs a simple text match on the location field.</li>
+                    <li><strong>Close Date:</strong> It looks for found items reported on the <strong>same day</strong> as the lost item was reported lost.</li>
+                </ul>
+                <p>Here is a simplified view of the SQL query logic inside the function:</p>
+                <pre><code>
+-- This is a conceptual representation of the query
+SELECT * FROM found_items
+WHERE 
+    status = 'active' AND
+    category_id = ? AND -- (1) Match the category of the lost item
+    location LIKE ? AND -- (2) Match the location
+    DATE(found_date) = ?; -- (3) Match the date
+                </code></pre>
+                <p>This proactive suggestion helps users quickly identify if their item has already been found, significantly speeding up the recovery process.</p>
+
+                <h3>Security Measures</h3>
+                <p>Security is a critical non-functional requirement. Here’s how it's implemented:</p>
+                <ul>
+                    <li><strong>Password Hashing:</strong> As mentioned, <code class="inline-code">password_hash()</code> and <code class="inline-code">password_verify()</code> are used, which is the industry standard for password management. It protects against rainbow table attacks.</li>
+                    <li><strong>SQL Injection Prevention:</strong> The application uses <strong>Prepared Statements</strong> with parameter binding for all database queries. Instead of inserting variables directly into SQL strings, placeholders (<code class="inline-code">?</code>) are used. This separates the SQL command from the data, making it impossible for an attacker to inject malicious SQL code through input fields.</li>
+                    <li><strong>Cross-Site Scripting (XSS) Prevention:</strong> When displaying user-generated content (like item descriptions), the application should use functions like <code class="inline-code">htmlspecialchars()</code>. This converts special HTML characters (e.g., <code class="inline-code">&lt;</code>, <code class="inline-code">&gt;</code>) into their HTML entities, preventing them from being rendered as HTML and executing malicious scripts.</li>
+                    <li><strong>Role-Based Access Control (RBAC):</strong> The system strictly separates user and admin privileges. The <code class="inline-code">isAdmin()</code> check on every admin page ensures that regular users cannot access administrative functions, even if they know the direct URL.</li>
+                    <li><strong>File Upload Security:</strong> The <code class="inline-code">uploadImage()</code> function in <code class="inline-code">functions.php</code> includes checks to validate file type and size. This prevents users from uploading malicious files (e.g., a PHP shell) disguised as images. It also generates a unique filename to avoid path traversal issues.</li>
+                </ul>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white mt-12">
+        <div class="container mx-auto px-6 py-4 text-center text-slate-500">
+            <p>&copy; 2024 UniFind Project. A conceptual documentation website.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const sections = document.querySelectorAll('.page-section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            function showPage(hash) {
+                const targetHash = hash || '#overview';
+                
+                sections.forEach(section => {
+                    section.style.display = ('#' + section.id === targetHash) ? 'block' : 'none';
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.toggle('active', link.getAttribute('href') === targetHash);
+                });
+                
+                mobileMenu.classList.add('hidden');
+                window.scrollTo(0, 0); // Scroll to top on page change
+            }
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetHash = this.getAttribute('href');
+                    history.pushState(null, null, targetHash);
+                    showPage(targetHash);
+                });
+            });
+
+            window.addEventListener('popstate', function () {
+                showPage(window.location.hash);
+            });
+            
+            mobileMenuButton.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            showPage(window.location.hash);
+        });
+    </script>
+
+</body>
+</html>
