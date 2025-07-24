@@ -1,4 +1,3 @@
-````markdown
 # UniFind - Lost and Found Management System
 
 UniFind is a dedicated web-based Lost and Found Management System designed specifically for the community of **Northern University of Business and Technology Khulna**. It provides a centralized, efficient, and user-friendly platform for students, faculty, and staff to report and recover lost or found items on campus, fostering a more secure and supportive university environment.
@@ -119,7 +118,7 @@ To set up and run this project on a local server, follow these steps:
     -   **Username**: `admin`
     -   **Password**: `admin123`
     -   Log in with these credentials to access the Admin Dashboard. **It is highly recommended to change the default password after your first login.**
-
+````markdown
 ## Project Structure
 UniFind/
 │
