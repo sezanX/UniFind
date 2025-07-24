@@ -57,7 +57,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <p class="mb-0">&copy; <?php echo date('Y'); ?> UniFind. All rights reserved.</p>
-                    <p class="text-muted small">Developed with <i class="fas fa-heart text-danger"></i> by NUBT Students</p>
+                    <p class="text-muted small">Developed with <i class="fas fa-heart text-danger"></i> by <a href="https://github.com/sezanX/"><b>SEZAN</b></a></p>
                 </div>
                 <div class="col-md-6 text-md-end">
                     <div class="mb-2">
